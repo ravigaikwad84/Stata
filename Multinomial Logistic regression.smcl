@@ -1,0 +1,470 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/user/Desktop/STATA /Multinominal Logistic Regression/Multinomial Logistic regression.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}23 Jun 2020, 20:33:03
+
+{com}. use https://stats.idre.ucla.edu/stat/data/hsbdemo, clear
+{txt}(highschool and beyond (200 cases))
+
+{com}. 
+. tab prog ses, chi2
+
+   {txt}type of {c |}               ses
+   program {c |}       low     middle       high {c |}     Total
+{hline 11}{c +}{hline 33}{c +}{hline 10}
+   general {c |}{res}        16         20          9 {txt}{c |}{res}        45 
+{txt}  academic {c |}{res}        19         44         42 {txt}{c |}{res}       105 
+{txt}  vocation {c |}{res}        12         31          7 {txt}{c |}{res}        50 
+{txt}{hline 11}{c +}{hline 33}{c +}{hline 10}
+     Total {c |}{res}        47         95         58 {txt}{c |}{res}       200 
+
+{txt}          Pearson chi2({res}4{txt}) = {res} 16.6044  {txt} Pr = {res}0.002
+
+{com}. 
+. table prog, con(mean write sd write)
+
+{txt}{hline 10}{c TT}{hline 25}
+type of   {c |}
+program   {c |} mean(write)    sd(write)
+{hline 10}{c +}{hline 25}
+  general {c |}    {res}51.33333     9.397776
+ {txt}academic {c |}    {res}56.25714     7.943343
+ {txt}vocation {c |}       {res}46.76     9.318754
+{txt}{hline 10}{c BT}{hline 25}
+
+{com}. 
+. mlogit prog i.ses write, base(2)
+
+{res}{txt}Iteration 0:{space 3}log likelihood = {res:-204.09667}  
+Iteration 1:{space 3}log likelihood = {res:-180.80105}  
+Iteration 2:{space 3}log likelihood = {res:-179.98724}  
+Iteration 3:{space 3}log likelihood = {res:-179.98173}  
+Iteration 4:{space 3}log likelihood = {res:-179.98173}  
+{res}
+{txt}Multinomial logistic regression{col 49}Number of obs{col 67}= {res}       200
+{txt}{col 49}LR chi2({res}6{txt}){col 67}= {res}     48.23
+{txt}{col 49}Prob > chi2{col 67}= {res}    0.0000
+{txt}Log likelihood = {res}-179.98173{txt}{col 49}Pseudo R2{col 67}= {res}    0.1182
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}        prog{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}general      {txt}{c |}
+{space 9}ses {c |}
+{space 5}middle  {c |}{col 14}{res}{space 2} -.533291{col 26}{space 2} .4437321{col 37}{space 1}   -1.20{col 46}{space 3}0.229{col 54}{space 4} -1.40299{col 67}{space 3}  .336408
+{txt}{space 7}high  {c |}{col 14}{res}{space 2}-1.162832{col 26}{space 2} .5142195{col 37}{space 1}   -2.26{col 46}{space 3}0.024{col 54}{space 4}-2.170684{col 67}{space 3}-.1549804
+{txt}{space 12} {c |}
+{space 7}write {c |}{col 14}{res}{space 2}-.0579284{col 26}{space 2} .0214109{col 37}{space 1}   -2.71{col 46}{space 3}0.007{col 54}{space 4}-.0998931{col 67}{space 3}-.0159637
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 2.852186{col 26}{space 2} 1.166439{col 37}{space 1}    2.45{col 46}{space 3}0.014{col 54}{space 4} .5660075{col 67}{space 3} 5.138365
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}{res}academic    {col 14}{txt}{c |}  (base outcome)
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}vocation     {txt}{c |}
+{space 9}ses {c |}
+{space 5}middle  {c |}{col 14}{res}{space 2} .2913931{col 26}{space 2} .4763737{col 37}{space 1}    0.61{col 46}{space 3}0.541{col 54}{space 4}-.6422822{col 67}{space 3} 1.225068
+{txt}{space 7}high  {c |}{col 14}{res}{space 2}-.9826703{col 26}{space 2} .5955669{col 37}{space 1}   -1.65{col 46}{space 3}0.099{col 54}{space 4} -2.14996{col 67}{space 3} .1846195
+{txt}{space 12} {c |}
+{space 7}write {c |}{col 14}{res}{space 2}-.1136026{col 26}{space 2} .0222199{col 37}{space 1}   -5.11{col 46}{space 3}0.000{col 54}{space 4}-.1571528{col 67}{space 3}-.0700524
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}   5.2182{col 26}{space 2} 1.163549{col 37}{space 1}    4.48{col 46}{space 3}0.000{col 54}{space 4} 2.937686{col 67}{space 3} 7.498714
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. 
+. mlogit, rrr
+
+{txt}Multinomial logistic regression{col 49}Number of obs{col 67}= {res}       200
+{txt}{col 49}LR chi2({res}6{txt}){col 67}= {res}     48.23
+{txt}{col 49}Prob > chi2{col 67}= {res}    0.0000
+{txt}Log likelihood = {res}-179.98173{txt}{col 49}Pseudo R2{col 67}= {res}    0.1182
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}        prog{col 14}{c |}        RRR{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}general      {txt}{c |}
+{space 9}ses {c |}
+{space 5}middle  {c |}{col 14}{res}{space 2}  .586671{col 26}{space 2} .2603248{col 37}{space 1}   -1.20{col 46}{space 3}0.229{col 54}{space 4} .2458607{col 67}{space 3}  1.39991
+{txt}{space 7}high  {c |}{col 14}{res}{space 2} .3125996{col 26}{space 2} .1607448{col 37}{space 1}   -2.26{col 46}{space 3}0.024{col 54}{space 4} .1140996{col 67}{space 3}  .856432
+{txt}{space 12} {c |}
+{space 7}write {c |}{col 14}{res}{space 2} .9437175{col 26}{space 2} .0202059{col 37}{space 1}   -2.71{col 46}{space 3}0.007{col 54}{space 4} .9049342{col 67}{space 3}  .984163
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 17.32562{col 26}{space 2} 20.20928{col 37}{space 1}    2.45{col 46}{space 3}0.014{col 54}{space 4} 1.761221{col 67}{space 3} 170.4369
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}{res}academic    {col 14}{txt}{c |}  (base outcome)
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}vocation     {txt}{c |}
+{space 9}ses {c |}
+{space 5}middle  {c |}{col 14}{res}{space 2} 1.338291{col 26}{space 2} .6375264{col 37}{space 1}    0.61{col 46}{space 3}0.541{col 54}{space 4} .5260904{col 67}{space 3} 3.404399
+{txt}{space 7}high  {c |}{col 14}{res}{space 2} .3743103{col 26}{space 2} .2229268{col 37}{space 1}   -1.65{col 46}{space 3}0.099{col 54}{space 4} .1164888{col 67}{space 3} 1.202761
+{txt}{space 12} {c |}
+{space 7}write {c |}{col 14}{res}{space 2} .8926126{col 26}{space 2} .0198338{col 37}{space 1}   -5.11{col 46}{space 3}0.000{col 54}{space 4} .8545734{col 67}{space 3} .9323449
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 184.6016{col 26}{space 2}  214.793{col 37}{space 1}    4.48{col 46}{space 3}0.000{col 54}{space 4} 18.87213{col 67}{space 3} 1805.719
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{p 0 6 2}Note: {res:_cons} estimates baseline relative risk{txt} for each outcome{txt}.{p_end}
+
+{com}. 
+. margins ses, atmeans predict(outcome(1))
+{res}
+{txt}Adjusted predictions{col 49}Number of obs{col 67}= {res}       200
+{txt}{col 1}Model VCE{col 14}: {res}OIM
+
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:Expression}:{space 1}{res:Pr(prog==general), predict(outcome(1))}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:at}:{space 1}{res:{txt:1.ses}{space 11}{txt:=} {space 7}.235 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:2.ses}{space 11}{txt:=} {space 7}.475 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:3.ses}{space 11}{txt:=} {space 8}.29 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:write}{space 11}{txt:=} {space 5}52.775 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+
+{res}{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26} Delta-method
+{col 14}{c |}     Margin{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}ses {c |}
+{space 8}low  {c |}{col 14}{res}{space 2} .3581927{col 26}{space 2} .0726423{col 37}{space 1}    4.93{col 46}{space 3}0.000{col 54}{space 4} .2158163{col 67}{space 3}  .500569
+{txt}{space 5}middle  {c |}{col 14}{res}{space 2} .2283338{col 26}{space 2} .0451162{col 37}{space 1}    5.06{col 46}{space 3}0.000{col 54}{space 4} .1399075{col 67}{space 3}   .31676
+{txt}{space 7}high  {c |}{col 14}{res}{space 2} .1784932{col 26}{space 2} .0540486{col 37}{space 1}    3.30{col 46}{space 3}0.001{col 54}{space 4} .0725598{col 67}{space 3} .2844266
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. 
+. margins ses, atmeans predict(outcome(2))
+{res}
+{txt}Adjusted predictions{col 49}Number of obs{col 67}= {res}       200
+{txt}{col 1}Model VCE{col 14}: {res}OIM
+
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:Expression}:{space 1}{res:Pr(prog==academic), predict(outcome(2))}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:at}:{space 1}{res:{txt:1.ses}{space 11}{txt:=} {space 7}.235 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:2.ses}{space 11}{txt:=} {space 7}.475 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:3.ses}{space 11}{txt:=} {space 8}.29 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:write}{space 11}{txt:=} {space 5}52.775 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+
+{res}{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26} Delta-method
+{col 14}{c |}     Margin{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}ses {c |}
+{space 8}low  {c |}{col 14}{res}{space 2} .4396842{col 26}{space 2} .0779925{col 37}{space 1}    5.64{col 46}{space 3}0.000{col 54}{space 4} .2868217{col 67}{space 3} .5925466
+{txt}{space 5}middle  {c |}{col 14}{res}{space 2} .4777488{col 26}{space 2} .0552593{col 37}{space 1}    8.65{col 46}{space 3}0.000{col 54}{space 4} .3694426{col 67}{space 3}  .586055
+{txt}{space 7}high  {c |}{col 14}{res}{space 2} .7009021{col 26}{space 2} .0663042{col 37}{space 1}   10.57{col 46}{space 3}0.000{col 54}{space 4} .5709483{col 67}{space 3} .8308559
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. 
+. margins ses, atmeans predict(outcome(3))
+{res}
+{txt}Adjusted predictions{col 49}Number of obs{col 67}= {res}       200
+{txt}{col 1}Model VCE{col 14}: {res}OIM
+
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:Expression}:{space 1}{res:Pr(prog==vocation), predict(outcome(3))}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:at}:{space 1}{res:{txt:1.ses}{space 11}{txt:=} {space 7}.235 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:2.ses}{space 11}{txt:=} {space 7}.475 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:3.ses}{space 11}{txt:=} {space 8}.29 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:write}{space 11}{txt:=} {space 5}52.775 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+
+{res}{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26} Delta-method
+{col 14}{c |}     Margin{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}ses {c |}
+{space 8}low  {c |}{col 14}{res}{space 2} .2021232{col 26}{space 2} .0599647{col 37}{space 1}    3.37{col 46}{space 3}0.001{col 54}{space 4} .0845945{col 67}{space 3} .3196519
+{txt}{space 5}middle  {c |}{col 14}{res}{space 2} .2939174{col 26}{space 2} .0503617{col 37}{space 1}    5.84{col 46}{space 3}0.000{col 54}{space 4} .1952103{col 67}{space 3} .3926246
+{txt}{space 7}high  {c |}{col 14}{res}{space 2} .1206047{col 26}{space 2}   .04643{col 37}{space 1}    2.60{col 46}{space 3}0.009{col 54}{space 4} .0296037{col 67}{space 3} .2116058
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. 
+. 
+. *ploting margins
+
+. 
+. margins ses, atmeans predict(outcome(1))
+{res}
+{txt}Adjusted predictions{col 49}Number of obs{col 67}= {res}       200
+{txt}{col 1}Model VCE{col 14}: {res}OIM
+
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:Expression}:{space 1}{res:Pr(prog==general), predict(outcome(1))}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:at}:{space 1}{res:{txt:1.ses}{space 11}{txt:=} {space 7}.235 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:2.ses}{space 11}{txt:=} {space 7}.475 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:3.ses}{space 11}{txt:=} {space 8}.29 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:write}{space 11}{txt:=} {space 5}52.775 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+
+{res}{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26} Delta-method
+{col 14}{c |}     Margin{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}ses {c |}
+{space 8}low  {c |}{col 14}{res}{space 2} .3581927{col 26}{space 2} .0726423{col 37}{space 1}    4.93{col 46}{space 3}0.000{col 54}{space 4} .2158163{col 67}{space 3}  .500569
+{txt}{space 5}middle  {c |}{col 14}{res}{space 2} .2283338{col 26}{space 2} .0451162{col 37}{space 1}    5.06{col 46}{space 3}0.000{col 54}{space 4} .1399075{col 67}{space 3}   .31676
+{txt}{space 7}high  {c |}{col 14}{res}{space 2} .1784932{col 26}{space 2} .0540486{col 37}{space 1}    3.30{col 46}{space 3}0.001{col 54}{space 4} .0725598{col 67}{space 3} .2844266
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. marginsplot, name(general) 
+{res}
+{text}{p 2 6 2}Variables that uniquely identify margins: ses{p_end}
+{err}graph general already exists
+{txt}{search r(110), local:r(110);}
+
+{com}. margins ses, atmeans predict(outcome(2))
+{res}
+{txt}Adjusted predictions{col 49}Number of obs{col 67}= {res}       200
+{txt}{col 1}Model VCE{col 14}: {res}OIM
+
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:Expression}:{space 1}{res:Pr(prog==academic), predict(outcome(2))}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:at}:{space 1}{res:{txt:1.ses}{space 11}{txt:=} {space 7}.235 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:2.ses}{space 11}{txt:=} {space 7}.475 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:3.ses}{space 11}{txt:=} {space 8}.29 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:write}{space 11}{txt:=} {space 5}52.775 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+
+{res}{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26} Delta-method
+{col 14}{c |}     Margin{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}ses {c |}
+{space 8}low  {c |}{col 14}{res}{space 2} .4396842{col 26}{space 2} .0779925{col 37}{space 1}    5.64{col 46}{space 3}0.000{col 54}{space 4} .2868217{col 67}{space 3} .5925466
+{txt}{space 5}middle  {c |}{col 14}{res}{space 2} .4777488{col 26}{space 2} .0552593{col 37}{space 1}    8.65{col 46}{space 3}0.000{col 54}{space 4} .3694426{col 67}{space 3}  .586055
+{txt}{space 7}high  {c |}{col 14}{res}{space 2} .7009021{col 26}{space 2} .0663042{col 37}{space 1}   10.57{col 46}{space 3}0.000{col 54}{space 4} .5709483{col 67}{space 3} .8308559
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. marginsplot, name(academic) 
+{res}
+{text}{p 2 6 2}Variables that uniquely identify margins: ses{p_end}
+{err}graph academic already exists
+{txt}{search r(110), local:r(110);}
+
+{com}. margins ses, atmeans predict(outcome(3))
+{res}
+{txt}Adjusted predictions{col 49}Number of obs{col 67}= {res}       200
+{txt}{col 1}Model VCE{col 14}: {res}OIM
+
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:Expression}:{space 1}{res:Pr(prog==vocation), predict(outcome(3))}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:at}:{space 1}{res:{txt:1.ses}{space 11}{txt:=} {space 7}.235 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:2.ses}{space 11}{txt:=} {space 7}.475 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:3.ses}{space 11}{txt:=} {space 8}.29 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col: }{space 2}{res:{txt:write}{space 11}{txt:=} {space 5}52.775 {txt:(mean)}}{p_end}
+{p2colreset}{...}
+
+{res}{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26} Delta-method
+{col 14}{c |}     Margin{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}ses {c |}
+{space 8}low  {c |}{col 14}{res}{space 2} .2021232{col 26}{space 2} .0599647{col 37}{space 1}    3.37{col 46}{space 3}0.001{col 54}{space 4} .0845945{col 67}{space 3} .3196519
+{txt}{space 5}middle  {c |}{col 14}{res}{space 2} .2939174{col 26}{space 2} .0503617{col 37}{space 1}    5.84{col 46}{space 3}0.000{col 54}{space 4} .1952103{col 67}{space 3} .3926246
+{txt}{space 7}high  {c |}{col 14}{res}{space 2} .1206047{col 26}{space 2}   .04643{col 37}{space 1}    2.60{col 46}{space 3}0.009{col 54}{space 4} .0296037{col 67}{space 3} .2116058
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. marginsplot, name(vocational) 
+{res}
+{text}{p 2 6 2}Variables that uniquely identify margins: ses{p_end}
+{err}graph vocational already exists
+{txt}{search r(110), local:r(110);}
+
+{com}. graph combine general academic vocational, ycommon
+{res}
+{com}. 
+. *predictions for write 
+
+. margins, at(write = (30(10) 70)) predict(outcome(1)) vsquish
+{res}
+{txt}Predictive margins{col 49}Number of obs{col 67}= {res}       200
+{txt}{col 1}Model VCE{col 14}: {res}OIM
+
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:Expression}:{space 1}{res:Pr(prog==general), predict(outcome(1))}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:1._at}:{space 1}{res:{txt:write}{space 11}{txt:=} {space 9}30}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:2._at}:{space 1}{res:{txt:write}{space 11}{txt:=} {space 9}40}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:3._at}:{space 1}{res:{txt:write}{space 11}{txt:=} {space 9}50}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:4._at}:{space 1}{res:{txt:write}{space 11}{txt:=} {space 9}60}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:5._at}:{space 1}{res:{txt:write}{space 11}{txt:=} {space 9}70}{p_end}
+{p2colreset}{...}
+
+{res}{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26} Delta-method
+{col 14}{c |}     Margin{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}_at {c |}
+{space 10}1  {c |}{col 14}{res}{space 2} .2130954{col 26}{space 2} .0774327{col 37}{space 1}    2.75{col 46}{space 3}0.006{col 54}{space 4} .0613302{col 67}{space 3} .3648606
+{txt}{space 10}2  {c |}{col 14}{res}{space 2} .2569932{col 26}{space 2} .0529761{col 37}{space 1}    4.85{col 46}{space 3}0.000{col 54}{space 4} .1531619{col 67}{space 3} .3608245
+{txt}{space 10}3  {c |}{col 14}{res}{space 2} .2543008{col 26}{space 2} .0336297{col 37}{space 1}    7.56{col 46}{space 3}0.000{col 54}{space 4} .1883878{col 67}{space 3} .3202138
+{txt}{space 10}4  {c |}{col 14}{res}{space 2} .2057855{col 26}{space 2} .0371536{col 37}{space 1}    5.54{col 46}{space 3}0.000{col 54}{space 4} .1329658{col 67}{space 3} .2786052
+{txt}{space 10}5  {c |}{col 14}{res}{space 2} .1423089{col 26}{space 2} .0481683{col 37}{space 1}    2.95{col 46}{space 3}0.003{col 54}{space 4} .0479007{col 67}{space 3} .2367172
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. margins, at(write = (30(10) 70)) predict(outcome(2)) vsquish
+{res}
+{txt}Predictive margins{col 49}Number of obs{col 67}= {res}       200
+{txt}{col 1}Model VCE{col 14}: {res}OIM
+
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:Expression}:{space 1}{res:Pr(prog==academic), predict(outcome(2))}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:1._at}:{space 1}{res:{txt:write}{space 11}{txt:=} {space 9}30}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:2._at}:{space 1}{res:{txt:write}{space 11}{txt:=} {space 9}40}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:3._at}:{space 1}{res:{txt:write}{space 11}{txt:=} {space 9}50}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:4._at}:{space 1}{res:{txt:write}{space 11}{txt:=} {space 9}60}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:5._at}:{space 1}{res:{txt:write}{space 11}{txt:=} {space 9}70}{p_end}
+{p2colreset}{...}
+
+{res}{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26} Delta-method
+{col 14}{c |}     Margin{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}_at {c |}
+{space 10}1  {c |}{col 14}{res}{space 2} .1348408{col 26}{space 2} .0525979{col 37}{space 1}    2.56{col 46}{space 3}0.010{col 54}{space 4} .0317507{col 67}{space 3} .2379308
+{txt}{space 10}2  {c |}{col 14}{res}{space 2} .2808143{col 26}{space 2} .0553213{col 37}{space 1}    5.08{col 46}{space 3}0.000{col 54}{space 4} .1723867{col 67}{space 3}  .389242
+{txt}{space 10}3  {c |}{col 14}{res}{space 2} .4773283{col 26}{space 2} .0397591{col 37}{space 1}   12.01{col 46}{space 3}0.000{col 54}{space 4}  .399402{col 67}{space 3} .5552547
+{txt}{space 10}4  {c |}{col 14}{res}{space 2} .6680752{col 26}{space 2} .0434689{col 37}{space 1}   15.37{col 46}{space 3}0.000{col 54}{space 4} .5828776{col 67}{space 3} .7532727
+{txt}{space 10}5  {c |}{col 14}{res}{space 2} .8075124{col 26}{space 2} .0545504{col 37}{space 1}   14.80{col 46}{space 3}0.000{col 54}{space 4} .7005956{col 67}{space 3} .9144291
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. margins, at(write = (30(10) 70)) predict(outcome(3)) vsquish
+{res}
+{txt}Predictive margins{col 49}Number of obs{col 67}= {res}       200
+{txt}{col 1}Model VCE{col 14}: {res}OIM
+
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:Expression}:{space 1}{res:Pr(prog==vocation), predict(outcome(3))}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:1._at}:{space 1}{res:{txt:write}{space 11}{txt:=} {space 9}30}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:2._at}:{space 1}{res:{txt:write}{space 11}{txt:=} {space 9}40}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:3._at}:{space 1}{res:{txt:write}{space 11}{txt:=} {space 9}50}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:4._at}:{space 1}{res:{txt:write}{space 11}{txt:=} {space 9}60}{p_end}
+{p2colreset}{...}
+{txt}{p2colset 1 14 16 2}{...}
+{p2col:5._at}:{space 1}{res:{txt:write}{space 11}{txt:=} {space 9}70}{p_end}
+{p2colreset}{...}
+
+{res}{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26} Delta-method
+{col 14}{c |}     Margin{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}_at {c |}
+{space 10}1  {c |}{col 14}{res}{space 2} .6520638{col 26}{space 2} .0944041{col 37}{space 1}    6.91{col 46}{space 3}0.000{col 54}{space 4} .4670353{col 67}{space 3} .8370924
+{txt}{space 10}2  {c |}{col 14}{res}{space 2} .4621925{col 26}{space 2} .0614388{col 37}{space 1}    7.52{col 46}{space 3}0.000{col 54}{space 4} .3417747{col 67}{space 3} .5826102
+{txt}{space 10}3  {c |}{col 14}{res}{space 2} .2683708{col 26}{space 2} .0342932{col 37}{space 1}    7.83{col 46}{space 3}0.000{col 54}{space 4} .2011575{col 67}{space 3} .3355842
+{txt}{space 10}4  {c |}{col 14}{res}{space 2} .1261393{col 26}{space 2}   .03019{col 37}{space 1}    4.18{col 46}{space 3}0.000{col 54}{space 4} .0669679{col 67}{space 3} .1853107
+{txt}{space 10}5  {c |}{col 14}{res}{space 2} .0501787{col 26}{space 2} .0216863{col 37}{space 1}    2.31{col 46}{space 3}0.021{col 54}{space 4} .0076744{col 67}{space 3}  .092683
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. 
+. *ploting prob
+
+. predict p1 p2 p3
+{txt}(option {bf:pr} assumed; predicted probabilities)
+
+{com}. sort write
+
+. twoway (line p1 write if ses ==1) (line p1 write if ses==2) (line p1 write if ses ==3), legend(order(1 "ses = 1" 2 "ses = 2" 3 "ses = 3") ring(0) position(7) row(1))
+{res}
+{com}. 
+. twoway (line p2 write if ses ==1) (line p2 write if ses==2) (line p2 write if ses ==3), legend(order(1 "ses = 1" 2 "ses = 2" 3 "ses = 3") ring(0) position(7) row(1))
+{res}
+{com}. 
+. twoway (line p3 write if ses ==1) (line p3 write if ses==2) (line p3 write if ses ==3),legend(order(1 "ses = 1" 2 "ses = 2" 3 "ses = 3") ring(0) position(7) row(1))
+{res}
+{com}. 
+. fitstat
+
+{txt}Measures of Fit for {res}mlogit{txt} of {res}prog
+
+{txt}Log-Lik Intercept Only:  {res}   -204.097     {txt}Log-Lik Full Model:      {res}   -179.982
+{txt}D(185):                  {res}    359.963     {txt}LR(6):                   {res}     48.230
+                                         {txt}Prob > LR:                 {res}    0.000
+{txt}McFadden's R2:             {res}    0.118     {txt}McFadden's Adj R2:         {res}    0.045
+{txt}Maximum Likelihood R2:     {res}    0.214     {txt}Cragg & Uhler's R2:        {res}    0.246
+{txt}Count R2:                  {res}    0.545     {txt}Adj Count R2:              {res}    0.042
+{txt}AIC:                     {res}      1.950     {txt}AIC*n:                   {res}    389.963
+{txt}BIC:                     {res}   -620.225     {txt}BIC':                    {res}    -16.440
+
+{com}. 
+. graph save "Graph" "/Users/user/Desktop/STATA /Multinominal Logistic Regression/Graph.gph", replace
+{res}{txt}(file /Users/user/Desktop/STATA /Multinominal Logistic Regression/Graph.gph saved)
+
+{com}. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/user/Desktop/STATA /Multinominal Logistic Regression/Multinomial Logistic regression.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}23 Jun 2020, 20:35:33
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
