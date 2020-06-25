@@ -1,0 +1,121 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/user/Desktop/STATA /Instrumental-variable Regression/Instrumental-variable regression.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}25 Jun 2020, 10:48:35
+
+{com}. webuse educwages
+
+. 
+. describe
+
+{txt}Contains data from {res}https://www.stata-press.com/data/r16/educwages.dta
+{txt}  obs:{res}         1,000                          
+{txt} vars:{res}             5                          11 Sep 2018 13:36
+{txt}{hline}
+              storage   display    value
+variable name   type    format     label      variable label
+{hline}
+{p 0 48}{res}{bind:wages          }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}Annual wages (USD){p_end}
+{p 0 48}{bind:union          }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:union    }{bind:  }{res}{res}Union membership{p_end}
+{p 0 48}{bind:education      }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}Education (years){p_end}
+{p 0 48}{bind:meducation     }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}Mother's education (years){p_end}
+{p 0 48}{bind:feducation     }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}Father's education (years){p_end}
+{txt}{hline}
+Sorted by: 
+
+{com}. 
+. *education is endogenous variable.  Parents education is instrumental variable
+
+. 
+. ivregress 2sls wages union (education = meducation feducation)
+{res}
+{txt}{col 1}Instrumental variables (2SLS) regression{col 51}Number of obs{col 67}= {res}     1,000
+{txt}{col 1}{col 51}Wald chi2({res}2{txt}){col 67}= {res}   3738.34
+{txt}{col 1}{col 51}Prob > chi2{col 67}= {res}    0.0000
+{txt}{col 1}{col 51}R-squared{col 67}= {res}    0.8599
+{txt}{col 51}Root MSE{col 67}=    {res}  1.018
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}       wages{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      z{col 46}   P>|z|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 3}education {c |}{col 14}{res}{space 2} .9700481{col 26}{space 2} .0177091{col 37}{space 1}   54.78{col 46}{space 3}0.000{col 54}{space 4} .9353389{col 67}{space 3} 1.004757
+{txt}{space 7}union {c |}{col 14}{res}{space 2} 1.930183{col 26}{space 2} .0644746{col 37}{space 1}   29.94{col 46}{space 3}0.000{col 54}{space 4} 1.803815{col 67}{space 3} 2.056551
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 30.55263{col 26}{space 2} .2882409{col 37}{space 1}  106.00{col 46}{space 3}0.000{col 54}{space 4} 29.98769{col 67}{space 3} 31.11757
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{p 0 15 59}Instrumented:{space 2}education{p_end}
+{p 0 15 59}Instruments:{space 3}union meducation feducation{p_end}
+
+{com}. 
+. *checking endogenity of education by
+
+. 
+. estat endog
+
+{txt}{col 3}Tests of endogeneity
+{col 3}Ho: variables are exogenous
+
+{col 3}Durbin (score) chi2({res}1{txt}){col 35}={res}{col 37} 460.681{txt}  (p = {res}0.0000{txt})
+{col 3}Wu-Hausman F({res}1{txt},{res}996{txt}){col 35}={res}{col 37} 850.772{txt}  (p = {res}0.0000{txt})
+
+{com}. 
+. * p-value is small reject H0(enxogeneity) hence there is endogenity
+
+. 
+. *report first-stage regression by
+
+. 
+. estat firststage
+{res}
+{txt}{col 3}First-stage regression summary statistics
+{res}{col 3}{text}{hline 13}{c TT}{hline 12}{hline 12}{hline 12}{hline 12}{hline 12}
+{col 16}{c |}{col 29}Adjusted{col 43}Partial
+{col 3}{text}    Variable{col 16}{c |}   R-sq.{col 29}   R-sq.{col 41}    R-sq.{col 53}   F(2,996){col 65}  Prob > F
+{res}{col 3}{text}{hline 13}{c +}{hline 12}{hline 12}{hline 12}{hline 12}{hline 12}
+{col 3}{text}   education{col 16}{c |}{result}{space 2}0.7567{col 29}{space 2}0.7560{col 41}{space 3}0.7562{col 53}{space 3} 1544.88{col 65}{space 3}0.0000
+{col 3}{text}{hline 13}{c BT}{hline 12}{hline 12}{hline 12}{hline 12}{hline 12}
+
+
+{col 3}Minimum eigenvalue statistic = {res}1544.88     
+
+{txt}{col 3}Critical Values{col 40}# of endogenous regressors:{res}    1
+{txt}{col 3}Ho: Instruments are weak{col 40}# of excluded instruments: {res}    2
+{txt}{col 3}{hline 35}{c TT}{hline 33}
+{col 38}{c |}{col 43}5%     10%     20%     30%
+{col 3}2SLS relative bias{col 38}{c |}{col 48}(not available)
+{col 3}{hline 35}{c +}{hline 33}
+{col 38}{c |}{col 42}10%     15%     20%     25%
+{col 3}2SLS Size of nominal 5% Wald test{col 38}{c |}{res}{col 41}19.93{col 49}11.59{col 57} 8.75{col 65} 7.25
+{txt}{col 3}LIML Size of nominal 5% Wald test{col 38}{c |}{res}{col 41} 8.68{col 49} 5.33{col 57} 4.42{col 65} 3.92
+{txt}{col 3}{hline 35}{c BT}{hline 33}
+
+{res}
+{com}. *partial R-squared is high meaning after keeping union constant, there is high correlation among education and parents education.
+
+. *also p-value is very low so reject Ho(instruments are weak).
+
+. 
+. *perform test of overidentifying restrictions in which H0: IV set is valid and model is correctly specified.
+
+. estat overid
+
+{txt}{col 3}Tests of overidentifying restrictions:
+
+{col 3}Sargan (score) chi2({res}1{txt}){col 26}={res}{col 28} .127213{txt}{col 38}(p = {res}0.7213{txt})
+{col 3}Basmann chi2({res}1{txt}){col 26}={res}{col 28} .126721{txt}{col 38}(p = {res}0.7219{txt})
+
+{com}. * p-value is high hence do not reject H0.
+
+. 
+. 
+. 
+. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/user/Desktop/STATA /Instrumental-variable Regression/Instrumental-variable regression.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}25 Jun 2020, 10:49:05
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
