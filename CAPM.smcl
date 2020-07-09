@@ -1,0 +1,236 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}Z:\Users\user\Desktop\Analytics\Stata12\CAPM\CAPM.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 9 Jul 2020, 17:24:37
+
+{com}. import excel "Z:\Users\user\Desktop\Analytics\Stata12\capm.xls", sheet("table") firstrow
+{res}
+{com}. 
+. 
+. 
+. replace Date=mofd(Date)
+{txt}(136 real changes made)
+
+{com}. 
+. 
+. 
+. Date%tm
+{err}unrecognized command:  Date
+{txt}{search r(199):r(199);}
+
+{com}. 
+. format Date%tm
+{err}invalid '%' 
+{txt}{search r(198):r(198);}
+
+{com}. 
+. format Date %tm
+
+. 
+. tsset Date
+{res}{txt}{col 9}time variable:  {res}{col 25}Date, 2002m1 to 2013m4
+{txt}{col 17}delta:  {res}1 month
+
+{com}. 
+. 
+. 
+. codebook
+
+{txt}{hline}
+{res}Date{right:Date}
+{txt}{hline}
+
+{col 19}type:  numeric monthly date ({res}int{txt})
+
+{col 18}range:  [{res}504{txt},{res}639{txt}]{col 55}units:  {res}1
+{col 8}{txt}or equivalently:  [{res}2002m1{txt},{res}2013m4{txt}]{col 55}units:  {res}months
+{col 10}{txt}unique values:  {res}136{col 51}{txt}missing .:  {res}0{txt}/{res}136
+
+{txt}{col 19}mean:{res}{col 26}   571.5{txt} = {res}2007m8{txt} (+ 15 days)
+{col 15}std. dev:{res}{col 26} 39.4039
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27}     517{col 37}   537.5{col 47}   571.5{col 57}   605.5{col 67}     626
+{col 26}   2003m2{col 36}  2004m10{col 46}   2007m8{col 56}   2010m6{col 66}   2012m3
+
+{txt}{hline}
+{res}SANDP{right:SANDP}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}729.57{txt},{res}1597.55{txt}]{col 55}units:  {res}.01
+{col 10}{txt}unique values:  {res}135{col 51}{txt}missing .:  {res}0{txt}/{res}136
+
+{txt}{col 19}mean:{res}{col 26} 1197.61
+{txt}{col 15}std. dev:{res}{col 26} 194.457
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27}  916.07{col 37} 1070.52{col 47} 1197.55{col 57} 1340.53{col 67}  1440.9
+
+{txt}{hline}
+{res}FORD{right:FORD}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}1.81{txt},{res}16.24{txt}]{col 55}units:  {res}.01
+{col 10}{txt}unique values:  {res}127{col 51}{txt}missing .:  {res}0{txt}/{res}136
+
+{txt}{col 19}mean:{res}{col 26} 9.59699
+{txt}{col 15}std. dev:{res}{col 26} 3.11835
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27}    5.87{col 37}   7.585{col 47}    9.42{col 57}   12.12{col 67}   13.55
+
+{txt}{hline}
+{res}GE{right:GE}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}7.51{txt},{res}33.4{txt}]{col 55}units:  {res}.01
+{col 10}{txt}unique values:  {res}134{col 51}{txt}missing .:  {res}0{txt}/{res}136
+
+{txt}{col 19}mean:{res}{col 26} 21.4957
+{txt}{col 15}std. dev:{res}{col 26}  5.6563
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27}   14.34{col 37}  17.185{col 47}  21.615{col 57}  26.225{col 67}   28.13
+
+{txt}{hline}
+{res}MICROSOFT{right:MICROSOFT}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}16.15{txt},{res}36.81{txt}]{col 55}units:  {res}.01
+{col 10}{txt}unique values:  {res}129{col 51}{txt}missing .:  {res}0{txt}/{res}136
+
+{txt}{col 19}mean:{res}{col 26} 25.8221
+{txt}{col 15}std. dev:{res}{col 26} 3.59299
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27}   21.18{col 37}  23.465{col 47}   25.76{col 57}   28.25{col 67}   30.48
+
+{txt}{hline}
+{res}ORACLE{right:ORACLE}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}7.58{txt},{res}35.51{txt}]{col 55}units:  {res}.01
+{col 10}{txt}unique values:  {res}130{col 51}{txt}missing .:  {res}0{txt}/{res}136
+
+{txt}{col 19}mean:{res}{col 26} 19.0536
+{txt}{col 15}std. dev:{res}{col 26} 7.61318
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27}   10.88{col 37}  12.255{col 47}   17.97{col 57}  24.515{col 67}   31.41
+
+{txt}{hline}
+{res}USTB3M{right:USTB3M}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.01{txt},{res}5.15{txt}]{col 55}units:  {res}.01
+{col 10}{txt}unique values:  {res}90{col 51}{txt}missing .:  {res}0{txt}/{res}136
+
+{txt}{col 19}mean:{res}{col 26} 1.64566
+{txt}{col 15}std. dev:{res}{col 26} 1.72227
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27}     .07{col 37}     .13{col 47}   1.125{col 57}   2.785{col 67}    4.84
+
+{com}. 
+. generate rsandp = 100*(ln(SANDP/L.SANDP))
+{txt}(1 missing value generated)
+
+{com}. 
+. generate rford = 100*(ln(FORD/L.FORD))
+{txt}(1 missing value generated)
+
+{com}. 
+. generate rge= 100*(ln(GE/L.GE))
+{txt}(1 missing value generated)
+
+{com}. 
+. generate rmicro= 100*(ln(MICROSOFT/L.MICROSOFT))
+{txt}(1 missing value generated)
+
+{com}. 
+. generate roracle= 100*(ln(ORACLE/L.ORACLE))
+{txt}(1 missing value generated)
+
+{com}. 
+. replace  USTB3M =  USTB3M/12
+{txt}(136 real changes made)
+
+{com}. 
+. generate ersandp= rsandp- USTB3M
+{txt}(1 missing value generated)
+
+{com}. 
+. generate erford =  rford- USTB3M
+{txt}(1 missing value generated)
+
+{com}. 
+. 
+. 
+. generate erge= rge- USTB3M
+{txt}(1 missing value generated)
+
+{com}. 
+. generate ermicro = rmicro- USTB3M
+{txt}(1 missing value generated)
+
+{com}. 
+. generate eroracle = roracle -  USTB3M
+{txt}(1 missing value generated)
+
+{com}. 
+. 
+. 
+. regress erford ersandp
+
+      {txt}Source {c |}       SS       df       MS              Number of obs ={res}     135
+{txt}{hline 13}{char +}{hline 30}           F(  1,   133) ={res}   72.64
+    {txt}   Model {char |} {res} 11565.9116     1  11565.9116           {txt}Prob > F      = {res} 0.0000
+    {txt}Residual {char |} {res} 21177.5644   133  159.229808           {txt}R-squared     = {res} 0.3532
+{txt}{hline 13}{char +}{hline 30}           Adj R-squared = {res} 0.3484
+    {txt}   Total {char |} {res}  32743.476   134  244.354298           {txt}Root MSE      = {res} 12.619
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}      erford{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 5}ersandp {c |}{col 14}{res}{space 2} 2.026213{col 26}{space 2} .2377428{col 37}{space 1}    8.52{col 46}{space 3}0.000{col 54}{space 4} 1.555967{col 67}{space 3} 2.496459
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-.3198632{col 26}{space 2} 1.086409{col 37}{space 1}   -0.29{col 46}{space 3}0.769{col 54}{space 4}-2.468738{col 67}{space 3} 1.829011
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. 
+. test (ersandp = 1)
+
+{p 0 7}{space 1}{text:( 1)}{space 1} {res}ersandp = 1{p_end}
+
+{txt}       F(  1,   133) ={res}   18.63
+{txt}{col 13}Prob > F ={res}    0.0000
+
+{com}. 
+. test (ersandp = 1)
+
+{p 0 7}{space 1}{text:( 1)}{space 1} {res}ersandp = 1{p_end}
+
+{txt}       F(  1,   133) ={res}   18.63
+{txt}{col 13}Prob > F ={res}    0.0000
+
+{com}. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}Z:\Users\user\Desktop\Analytics\Stata12\CAPM\CAPM.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res} 9 Jul 2020, 17:25:08
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
